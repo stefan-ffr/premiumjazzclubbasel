@@ -21,6 +21,8 @@
             --cream: #f5f5f0;
             --purple: #8A2BE2;
             --light-purple: #DA70D6;
+            --jazz-blue: #4a90a4;
+            --jazz-teal: #5fb3aa;
         }
 
         body {
@@ -40,12 +42,13 @@
         nav {
             position: fixed;
             width: 100%;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(15px);
             z-index: 1000;
             padding: 20px 0;
             border-bottom: 2px solid var(--gold);
             animation: slideDown 0.8s ease-out;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.8);
         }
 
         @keyframes slideDown {
@@ -213,11 +216,12 @@
             background: rgba(212,175,55,0.1);
         }
 
-        /* Hero Section */
+        /* Hero Section with Artwork Background */
         .hero {
             height: 100vh;
-            background: linear-gradient(135deg, rgba(10,10,10,0.9), rgba(212,175,55,0.1)),
-                        radial-gradient(circle at 30% 50%, rgba(212,175,55,0.2), transparent 50%);
+            background: 
+                linear-gradient(135deg, rgba(10,10,10,0.85), rgba(10,10,10,0.65)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><defs><pattern id="clocks" patternUnits="userSpaceOnUse" width="120" height="120"><circle cx="60" cy="60" r="55" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"/><line x1="60" y1="10" x2="60" y2="25" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><line x1="60" y1="95" x2="60" y2="110" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><line x1="10" y1="60" x2="25" y2="60" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><line x1="95" y1="60" x2="110" y2="60" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><line x1="60" y1="60" x2="75" y2="35" stroke="rgba(212,175,55,0.6)" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="60" x2="85" y2="60" stroke="rgba(212,175,55,0.8)" stroke-width="2" stroke-linecap="round"/></pattern></defs><rect width="100%25" height="100%25" fill="url(%23clocks)"/><rect width="100%25" height="100%25" fill="linear-gradient(45deg, rgba(74,144,164,0.3), rgba(95,179,170,0.2), rgba(138,43,226,0.15))"/></svg>') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -228,31 +232,59 @@
         .hero::before {
             content: '';
             position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(74,144,164,0.4), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(95,179,170,0.3), transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(138,43,226,0.2), transparent 60%);
+            animation: colorShift 15s ease-in-out infinite;
+        }
+
+        @keyframes colorShift {
+            0%, 100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
             width: 200%;
             height: 200%;
             background: repeating-linear-gradient(
                 45deg,
                 transparent,
-                transparent 10px,
-                rgba(212,175,55,0.03) 10px,
-                rgba(212,175,55,0.03) 20px
+                transparent 15px,
+                rgba(212,175,55,0.05) 15px,
+                rgba(212,175,55,0.05) 30px
             );
-            animation: drift 20s linear infinite;
+            animation: drift 25s linear infinite;
         }
 
         @keyframes drift {
             from {
-                transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%) rotate(0deg);
             }
             to {
-                transform: translate(0, 0);
+                transform: translate(-25%, -25%) rotate(360deg);
             }
         }
 
         .hero-content {
             text-align: center;
-            z-index: 1;
-            animation: fadeInUp 1.5s ease-out;
+            z-index: 2;
+            position: relative;
+            animation: fadeInUp 2s ease-out;
+            max-width: 800px;
+            padding: 0 20px;
         }
 
         @keyframes fadeInUp {
@@ -267,36 +299,117 @@
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, var(--gold), var(--cream));
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, var(--gold), var(--cream), var(--jazz-teal));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 3px;
-            animation: glow 3s ease-in-out infinite alternate;
+            letter-spacing: 4px;
+            text-shadow: 0 0 30px rgba(212,175,55,0.5);
+            animation: heroGlow 4s ease-in-out infinite alternate;
+            font-weight: bold;
         }
 
-        @keyframes glow {
+        @keyframes heroGlow {
             from {
-                filter: drop-shadow(0 0 20px rgba(212,175,55,0.5));
+                filter: drop-shadow(0 0 20px rgba(212,175,55,0.6));
+                transform: scale(1);
             }
             to {
-                filter: drop-shadow(0 0 40px rgba(212,175,55,0.8));
+                filter: drop-shadow(0 0 40px rgba(212,175,55,0.9));
+                transform: scale(1.02);
             }
         }
 
         .hero p {
-            font-size: 24px;
+            font-size: clamp(20px, 4vw, 28px);
             color: var(--cream);
-            margin-bottom: 30px;
-            opacity: 0.9;
+            margin-bottom: 25px;
+            opacity: 0.95;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 3vw, 20px);
+            opacity: 0.85;
+            color: var(--jazz-teal);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            letter-spacing: 1px;
+        }
+
+        /* Time Elements Animation */
+        .floating-clocks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .clock-element {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(212,175,55,0.3);
+            border-radius: 50%;
+            animation: floatClock 8s ease-in-out infinite;
+        }
+
+        .clock-element::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 2px;
+            background: rgba(212,175,55,0.6);
+            transform-origin: left center;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .clock-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .clock-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .clock-element:nth-child(3) {
+            bottom: 25%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        .clock-element:nth-child(4) {
+            top: 30%;
+            right: 30%;
+            animation-delay: 6s;
+        }
+
+        @keyframes floatClock {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+                opacity: 0.8;
+            }
         }
 
         /* Friday Jam Session */
         .jam-session {
             background: linear-gradient(180deg, var(--dark-gray), var(--black));
-            padding: 100px 20px;
+            padding: 120px 20px;
             position: relative;
         }
 
@@ -305,16 +418,16 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 80px;
             align-items: center;
         }
 
         .jam-info h2 {
-            font-size: 48px;
+            font-size: clamp(36px, 6vw, 52px);
             color: var(--gold);
             margin-bottom: 30px;
             position: relative;
-            animation: pulse 2s ease-in-out infinite;
+            animation: pulse 3s ease-in-out infinite;
         }
 
         @keyframes pulse {
@@ -322,48 +435,51 @@
                 transform: scale(1);
             }
             50% {
-                transform: scale(1.02);
+                transform: scale(1.03);
             }
         }
 
         .jam-highlight {
-            background: rgba(212,175,55,0.1);
+            background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(74,144,164,0.1));
             border-left: 4px solid var(--gold);
-            padding: 30px;
-            margin: 30px 0;
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
+            padding: 35px;
+            margin: 35px 0;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(212,175,55,0.2);
         }
 
         .jam-highlight:hover {
-            background: rgba(212,175,55,0.2);
-            transform: translateX(10px);
-            box-shadow: 0 10px 40px rgba(212,175,55,0.3);
+            background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(74,144,164,0.15));
+            transform: translateX(15px);
+            box-shadow: 0 15px 50px rgba(212,175,55,0.4);
         }
 
         .jam-highlight h3 {
             color: var(--gold);
-            font-size: 32px;
-            margin-bottom: 10px;
+            font-size: clamp(24px, 4vw, 32px);
+            margin-bottom: 15px;
         }
 
         .jam-visual {
             position: relative;
-            height: 400px;
-            background: radial-gradient(circle, rgba(212,175,55,0.2), transparent);
+            height: 450px;
+            background: radial-gradient(circle, rgba(212,175,55,0.2), rgba(74,144,164,0.1), transparent);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 20px;
+            border-radius: 25px;
             overflow: hidden;
+            border: 2px solid rgba(212,175,55,0.3);
         }
 
         .music-notes {
             position: absolute;
-            font-size: 40px;
+            font-size: 45px;
             color: var(--gold);
             animation: float 6s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(212,175,55,0.6);
         }
 
         .music-notes:nth-child(1) {
@@ -387,18 +503,18 @@
         @keyframes float {
             0%, 100% {
                 transform: translateY(0) rotate(0deg);
-                opacity: 0.6;
+                opacity: 0.7;
             }
             50% {
-                transform: translateY(-30px) rotate(10deg);
+                transform: translateY(-40px) rotate(15deg);
                 opacity: 1;
             }
         }
 
         /* Services */
         .services {
-            padding: 100px 20px;
-            background: var(--black);
+            padding: 120px 20px;
+            background: linear-gradient(180deg, var(--black), var(--dark-gray));
         }
 
         .services-container {
@@ -408,25 +524,25 @@
 
         .services h2 {
             text-align: center;
-            font-size: 48px;
+            font-size: clamp(36px, 6vw, 52px);
             color: var(--gold);
-            margin-bottom: 60px;
+            margin-bottom: 80px;
         }
 
         .service-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 50px;
         }
 
         .service-card {
             background: linear-gradient(135deg, var(--light-gray), var(--dark-gray));
-            padding: 40px;
-            border-radius: 20px;
+            padding: 45px;
+            border-radius: 25px;
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.5s ease;
             cursor: pointer;
         }
 
@@ -437,15 +553,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(212,175,55,0.1));
+            background: linear-gradient(135deg, transparent, rgba(212,175,55,0.15), rgba(74,144,164,0.1));
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
         }
 
         .service-card:hover {
             border-color: var(--gold);
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(212,175,55,0.3);
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 60px rgba(212,175,55,0.4);
         }
 
         .service-card:hover::before {
@@ -453,73 +569,77 @@
         }
 
         .service-icon {
-            font-size: 48px;
+            font-size: 52px;
             color: var(--gold);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(212,175,55,0.5);
         }
 
         .service-card h3 {
-            font-size: 28px;
+            font-size: clamp(24px, 4vw, 30px);
             color: var(--gold);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             position: relative;
             z-index: 1;
         }
 
         .service-card p {
             color: var(--cream);
-            line-height: 1.8;
+            line-height: 1.9;
             position: relative;
             z-index: 1;
+            font-size: 16px;
         }
 
         /* Contact Section */
         .contact {
-            background: linear-gradient(180deg, var(--black), var(--dark-gray));
-            padding: 100px 20px;
+            background: linear-gradient(180deg, var(--dark-gray), var(--black));
+            padding: 120px 20px;
         }
 
         .contact-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             text-align: center;
         }
 
         .contact h2 {
-            font-size: 48px;
+            font-size: clamp(36px, 6vw, 52px);
             color: var(--gold);
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
 
         .contact-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+            margin-bottom: 50px;
         }
 
         .contact-item {
-            padding: 30px;
-            background: rgba(212,175,55,0.05);
-            border-radius: 15px;
-            border: 1px solid rgba(212,175,55,0.2);
-            transition: all 0.3s ease;
+            padding: 35px;
+            background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(74,144,164,0.05));
+            border-radius: 20px;
+            border: 1px solid rgba(212,175,55,0.3);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
         }
 
         .contact-item:hover {
-            background: rgba(212,175,55,0.1);
+            background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(74,144,164,0.1));
             transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(212,175,55,0.2);
+            box-shadow: 0 15px 40px rgba(212,175,55,0.3);
         }
 
         .contact-item h3 {
             color: var(--gold);
-            margin-bottom: 10px;
-            font-size: 20px;
+            margin-bottom: 15px;
+            font-size: 22px;
         }
 
         .contact-item p {
             color: var(--cream);
+            font-size: 16px;
         }
 
         .contact-item a {
@@ -535,7 +655,7 @@
         /* CTA Button */
         .cta-button {
             display: inline-block;
-            padding: 18px 40px;
+            padding: 20px 45px;
             background: linear-gradient(45deg, var(--gold), var(--dark-gold));
             color: var(--black);
             text-decoration: none;
@@ -544,8 +664,9 @@
             border-radius: 50px;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-            margin-top: 20px;
+            transition: all 0.4s ease;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(212,175,55,0.3);
         }
 
         .cta-button::before {
@@ -562,8 +683,8 @@
         }
 
         .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(212,175,55,0.4);
+            transform: scale(1.08);
+            box-shadow: 0 20px 50px rgba(212,175,55,0.5);
         }
 
         .cta-button:hover::before {
@@ -574,14 +695,15 @@
         /* Footer */
         footer {
             background: var(--black);
-            padding: 30px;
+            padding: 40px;
             text-align: center;
             border-top: 2px solid var(--gold);
         }
 
         footer p {
             color: var(--cream);
-            opacity: 0.7;
+            opacity: 0.8;
+            font-size: 16px;
         }
 
         /* Mobile Responsive */
@@ -603,20 +725,38 @@
                 height: 40px;
             }
 
-            .hero h1 {
-                font-size: 3rem;
+            .hero {
+                padding: 0 15px;
             }
 
             .jam-content {
                 grid-template-columns: 1fr;
+                gap: 50px;
             }
 
             .service-cards {
                 grid-template-columns: 1fr;
+                gap: 30px;
             }
 
             .contact-info {
                 grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .floating-clocks {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 100vh;
+                padding: 0 10px;
+            }
+            
+            .jam-session, .services, .contact {
+                padding: 80px 15px;
             }
         }
     </style>
@@ -651,12 +791,20 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Artistic Background -->
     <section id="home" class="hero">
+        <!-- Floating Clock Elements -->
+        <div class="floating-clocks">
+            <div class="clock-element"></div>
+            <div class="clock-element"></div>
+            <div class="clock-element"></div>
+            <div class="clock-element"></div>
+        </div>
+        
         <div class="hero-content">
             <h1>Premium Jazz Club</h1>
             <p>Basel's Finest Jazz Experience</p>
-            <p style="font-size: 18px; opacity: 0.8;">Where Music Lives and Legends Are Born</p>
+            <p class="hero-subtitle">Where Time Stands Still for Music</p>
         </div>
     </section>
 
@@ -665,7 +813,7 @@
         <div class="jam-content">
             <div class="jam-info">
                 <h2>Friday Night<br>Jam Sessions</h2>
-                <p style="font-size: 20px; margin-bottom: 30px;">
+                <p style="font-size: 20px; margin-bottom: 30px; color: var(--cream); opacity: 0.9;">
                     Jeden Freitagabend verwandelt sich der Premium Jazz Club in Basel's pulsierendes Herz der Jazzmusik.
                 </p>
                 
@@ -687,7 +835,7 @@
                 <div class="music-notes">♪</div>
                 <div class="music-notes">♫</div>
                 <div class="music-notes">♪</div>
-                <div style="font-size: 80px; color: var(--gold); opacity: 0.3;">🎷</div>
+                <div style="font-size: 90px; color: var(--gold); opacity: 0.4; text-shadow: 0 0 30px rgba(212,175,55,0.6);">🎷</div>
             </div>
         </div>
     </section>
@@ -793,11 +941,19 @@
             });
         });
 
-        // Add parallax effect to hero section
+        // Enhanced parallax effect for hero section
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const hero = document.querySelector('.hero');
+            const heroContent = document.querySelector('.hero-content');
+            
+            // Parallax background
             hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            
+            // Subtle parallax for content
+            if (heroContent) {
+                heroContent.style.transform = `translateY(${scrolled * 0.2}px)`;
+            }
         });
 
         // Animate elements on scroll
@@ -815,7 +971,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.service-card, .contact-item').forEach(el => {
+        document.querySelectorAll('.service-card, .contact-item, .jam-highlight').forEach(el => {
             el.style.opacity = '0';
             observer.observe(el);
         });
@@ -847,6 +1003,35 @@
                 closeMobileMenu();
             }
         });
+
+        // Add subtle hover effects for floating clocks
+        document.querySelectorAll('.clock-element').forEach((clock, index) => {
+            clock.addEventListener('mouseenter', function() {
+                this.style.animationPlayState = 'paused';
+                this.style.transform = 'scale(1.2)';
+                this.style.opacity = '1';
+            });
+            
+            clock.addEventListener('mouseleave', function() {
+                this.style.animationPlayState = 'running';
+                this.style.transform = 'scale(1)';
+                this.style.opacity = '0.6';
+            });
+        });
+
+        // Dynamic color shifting for hero background
+        setInterval(() => {
+            const hero = document.querySelector('.hero::before');
+            if (hero) {
+                const colors = [
+                    'rgba(74,144,164,0.4)',
+                    'rgba(95,179,170,0.3)', 
+                    'rgba(138,43,226,0.2)',
+                    'rgba(212,175,55,0.3)'
+                ];
+                // This would be more complex to implement, keeping current CSS animation
+            }
+        }, 5000);
     </script>
 </body>
 </html>
